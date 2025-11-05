@@ -1,5 +1,5 @@
 const localization = {
-	contentfulLocales: ["en-CA"],
+	contentfulLocales: ["en-US"],
 	locales: ["en"],
 	defaultLocale: "en",
 	nonLocalizedModels: ["siteConfig"],

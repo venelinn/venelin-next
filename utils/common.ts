@@ -1,6 +1,6 @@
 export const PAGE_TYPE = "page";
 export const PAGE_TYPES = [PAGE_TYPE] as const;
-export const SITE_CONFIG_TYPE = "siteConfig";
+export const SITE_CONFIG_TYPE = "siteConfiguration";
 
 export const IS_DEV = process.env.NODE_ENV === "development";
 
@@ -22,11 +22,7 @@ export interface ImageData {
   [key: string]: any;
 }
 
-export function getOptimizedImage(
-  image?: CloudinaryImage | ImageData,
-  width = 500,
-  quality: string | number = "auto"
-) {
+export function getOptimizedImage(image?: CloudinaryImage | ImageData, width = 500, quality: string | number = "auto") {
   if (!image) return { url: "", width: 0, height: 0 };
 
   const src = "src" in image ? image.src : image.url;
@@ -48,11 +44,7 @@ export function getOptimizedImage(
 }
 
 /** Generate optimized Cloudinary image URL */
-export function getOptimizedImageURL(
-  image: CloudinaryImage,
-  width = 500,
-  quality: string | number = "auto"
-): string {
+export function getOptimizedImageURL(image: CloudinaryImage, width = 500, quality: string | number = "auto"): string {
   if (typeof image.src === "string") {
     // Force HTTPS
     const secureSrc = image.src.replace(/^http:\/\//i, "https://");
@@ -61,11 +53,10 @@ export function getOptimizedImageURL(
   return image.src;
 }
 
-
 /** Prevent WebP conversion for SVGs on Cloudinary */
 export function getCloudinaryAsSvg(url: string): string {
-	if (url.includes(".svg")) {
-		return url.replace("/f_auto", "");
-	}
-	return url;
+  if (url.includes(".svg")) {
+    return url.replace("/f_auto", "");
+  }
+  return url;
 }
