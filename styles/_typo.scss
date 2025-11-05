@@ -1,0 +1,27 @@
+@use 'styles/variables' as base;
+
+@mixin h1 {
+  line-height: 1.071;
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: sans-serif;
+  font-size: calc(16px + 8vw);
+}
+
+@mixin h2 {
+  text-transform: uppercase;
+  color: var(--base-color);
+  letter-spacing: 0.2rem;
+  white-space: nowrap;
+  font-size: inherit;
+  font-weight: bold;
+}
+
+@mixin h3 {
+  font-size: var(--heading3, 1.5rem);
+  @media (width > base.$smedium) {
+    --heading3: 2rem;
+  }
+}

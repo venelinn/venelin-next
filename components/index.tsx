@@ -1,14 +1,12 @@
-import { BandConnector } from "./Band";
-import { GridCollectionConnector } from "./Collection/GridConnectorConnector";
-import { Contacts } from "./Contacts";
+import { AboutConnector } from "./About";
 import { HeroConnector } from "./Hero";
-import { ImageContentConnector } from "./ImageContent";
+import { PortfolioConnector } from "./Portfolio";
+// import { Contacts } from "./Contacts";
 
 // Map components which are dynamically resolved by content type in the CMS
 export const componentMap = {
-  // hero: HeroConnector,
-  // imageContent: ImageContentConnector,
+  intro: HeroConnector,
+  about: AboutConnector,
+  portfolioList: PortfolioConnector,
   // contacts: Contacts,
-  // collection: GridCollectionConnector,
-  // band: BandConnector,
 };

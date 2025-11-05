@@ -1,0 +1,173 @@
+@use "typo" as typo;
+@use "./fonts/jost";
+@use "./fonts/league";
+@use "theme";
+@use "reset";
+@use "theme-toggle" as themeToggle;
+
+@layer reset, base, theme, layouts, components, utilities;
+
+:root {
+  interpolate-size: allow-keywords;
+  --base-color: #ff0100;
+  --color-dark: #313131;
+  --color-light: #444;
+  --color-white: 255, 255, 255;
+  --color-black: 0, 0, 0;
+  --page-max-width: 850px;
+  --text-in: cubic-bezier(0.31, 0.11, 0.12, 0.99);
+  --primary-ease: var(--custom-ease-1);
+  --body-font: "Jost", serif;
+  --header-font: "League Spartan";
+}
+
+html {
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  font-family: var(--body-font);
+  font-size: 1.2rem;
+  font-weight: normal;
+  line-height: 1.4;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: none;
+  &:has(dialog[open]) {
+    overflow: hidden;
+  }
+}
+
+a {
+  color: inherit;
+  transition: all 0.3s ease-in-out;
+}
+a:hover,
+a:focus,
+a:active {
+  outline: 0;
+}
+
+/**
+ * ===================================================================
+ * Typography & general theme styles
+ *
+ * -------------------------------------------------------------------
+ */
+
+h1,
+.title--h1 {
+  @include typo.h1;
+}
+
+h2,
+.title--h2 {
+  @include typo.h2;
+}
+
+h3,
+.title--h3 {
+  @include typo.h3;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--header-font);
+}
+
+.button {
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  display: inline-block;
+  letter-spacing: 0.2rem;
+  font-weight: bold;
+  border-radius: 44px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  border: 2px solid transparent;
+  padding: 1rem 2rem;
+  &:hover,
+  &:focus {
+    border-color: var(--base-color);
+    color: var(--base-color);
+  }
+}
+
+.not-found {
+  height: -webkit-fill-available;
+  min-height: 100vh;
+  background-color: var(--bg-even);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    font-size: calc(16px + 32vw);
+  }
+  p {
+    opacity: 0.5;
+  }
+  a {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+/**
+ * ===================================================================
+ * Misc Helper Styles
+ *
+ * -------------------------------------------------------------------
+ */
+
+.hide,
+.hidden {
+  display: none;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+button {
+  border: 0;
+  background: none;
+  outline: none;
+  padding: 0;
+  appearance: button;
+  cursor: pointer;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@keyframes hue {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(100deg);
+  }
+  100% {
+    filter: hue-rotate(0deg);
+  }
+}

@@ -1,45 +1,45 @@
 // contentfulRichTextRenderer.js
 
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import Image from "next/image";
-import React from "react";
-import { Heading } from "../components/Headings";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
+import Image from "next/image"
+
+// import { Heading } from "../components/Headings";
 
 // Utility function to adjust Cloudinary URLs
 function getCloudinaryImageURL(url) {
 	if (url.includes(".svg")) {
-		return url.replace("/f_auto", "");
+		return url.replace("/f_auto", "")
 	}
-	return url;
+	return url
 }
 
 // Use your `getCloudinaryImageURL` function to preprocess Cloudinary URLs
-export const renderEmbeddedEntryBlock = (node) => {
-	const heading = node.data.target.fields;
-	const seoHeading = heading?.isHidden;
-	// Render the Heading component with dynamic props
-	return (
-		<Heading
-			as={heading?.as}
-			size={heading?.size}
-			uppercase={heading?.uppercase}
-			alignment={heading?.alignment}
-			animationID={heading?.animationID}
-			highlight={heading?.highlight}
-			isHidden={heading?.isHidden}
-		>
-			{seoHeading ? (
-				<span className="sr-only">{heading?.heading}</span>
-			) : (
-				heading?.heading
-			)}
-		</Heading>
-	);
-};
+// export const renderEmbeddedEntryBlock = (node) => {
+// 	const heading = node.data.target.fields;
+// 	const seoHeading = heading?.isHidden;
+// 	// Render the Heading component with dynamic props
+// 	return (
+// 		<Heading
+// 			as={heading?.as}
+// 			size={heading?.size}
+// 			uppercase={heading?.uppercase}
+// 			alignment={heading?.alignment}
+// 			animationID={heading?.animationID}
+// 			highlight={heading?.highlight}
+// 			isHidden={heading?.isHidden}
+// 		>
+// 			{seoHeading ? (
+// 				<span className="sr-only">{heading?.heading}</span>
+// 			) : (
+// 				heading?.heading
+// 			)}
+// 		</Heading>
+// 	);
+// };
 
 // Function to render embedded assets like images
 export const renderEmbeddedAssetBlock = (node) => {
-	const asset = node.data.target.fields;
+	const asset = node.data.target.fields
 
 	return (
 		<Image
@@ -49,8 +49,8 @@ export const renderEmbeddedAssetBlock = (node) => {
 			height={asset.image[0].height}
 			// priority
 		/>
-	);
-};
+	)
+}
 // Main function to render rich text content
 export const renderRichTextContent = (content) => {
 	const richTextOptions = {
@@ -58,20 +58,20 @@ export const renderRichTextContent = (content) => {
 			"embedded-entry-block": (node) => {
 				// Check if the entry is a Heading or Button and render accordingly
 				if (node.data.target.sys.contentType.sys.id === "heading") {
-					return renderEmbeddedEntryBlock(node);
+					return renderEmbeddedEntryBlock(node)
 				} else if (
 					node.data.target.sys.contentType.sys.id === "cloudinaryAsset"
 				) {
-					return renderEmbeddedAssetBlock(node);
+					return renderEmbeddedAssetBlock(node)
 				} else if (node.data.target.sys.contentType.sys.id === "button") {
-					return renderButton(node);
+					return renderButton(node)
 				}
-				return null;
+				return null
 			},
 			// "embedded-entry-block": renderEmbeddedEntryBlock, // Apply custom rendering for embedded entries
 			hyperlink: (node, children) => {
-				const url = node.data.uri;
-				const isExternalLink = url.startsWith("http");
+				const url = node.data.uri
+				const isExternalLink = url.startsWith("http")
 
 				return (
 					<a
@@ -82,10 +82,10 @@ export const renderRichTextContent = (content) => {
 					>
 						<span className="link__text">{children}</span>
 					</a>
-				);
+				)
 			},
 		},
-	};
+	}
 
-	return documentToReactComponents(content, richTextOptions);
-};
+	return documentToReactComponents(content, richTextOptions)
+}

@@ -1,107 +1,98 @@
-import type { GetStaticPaths, GetStaticProps, NextPage } from "next"
-import { componentMap } from "@/components"
-import { Layout } from "@/components/Layout"
-import { IS_DEV, normalizeSlug } from "@/utils/common"
-import {
-	getNavigationLinks,
-	getPagePaths,
-	getPages,
-	getSiteConfig,
-} from "../utils/content"
-import localization from "../utils/localization"
+import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { componentMap } from "@/components";
+import { Layout } from "@/components/Layout";
+import { Section } from "@/components/Section";
+import { IS_DEV, normalizeSlug } from "@/utils/common";
+import { getNavigationLinks, getPagePaths, getPages, getSiteConfig } from "../utils/content";
+import localization from "../utils/localization";
 
 // --- Types ---
-type Section = {
-	id: string
-	type: string
-	[key: string]: any // allow other properties
-}
+type SectionProps = {
+  id: string;
+  type: string;
+  [key: string]: any; // allow other properties
+};
 
 type PageType = {
-	slug: string
-	locale: string
-	pageName?: string
-	sections?: Section[]
-}
+  slug: string;
+  locale: string;
+  pageName?: string;
+  sections?: SectionProps[];
+};
 
-type SiteConfig = any // define your structure if you have one
-type NavigationLink = any // define your structure if you have one
+type SiteConfig = any; // define your structure if you have one
+type NavigationLink = any; // define your structure if you have one
 
 type Props = {
-	page: PageType
-	siteConfig: SiteConfig
-	navigationLinks: NavigationLink[]
-}
+  page: PageType;
+  siteConfig: SiteConfig;
+  navigationLinks: NavigationLink[];
+};
 
 // --- Page Component ---
-const ComposablePage: NextPage<Props> = ({
-	page,
-	siteConfig,
-	navigationLinks,
-}) => {
-	return (
-		<Layout
-			page={page}
-			siteConfig={siteConfig}
-			navigationLinks={navigationLinks}
-		>
-			{page.sections?.length ? (
-				page.sections.map((section) => {
-					const Component = componentMap[section.type]
-					if (!Component) return null
+const ComposablePage: NextPage<Props> = ({ page, siteConfig, navigationLinks }) => {
+  return (
+    <Layout page={page} siteConfig={siteConfig} navigationLinks={navigationLinks}>
+      {page.sections?.length ? (
+        page.sections.map((section: any) => {
+          // 🛑 Skip unwanted sections by ID or type
+          const Component = componentMap[section.type];
+          if (!Component) return null;
 
-					return (
-						<Component
-							key={section.id}
-							{...section}
-							pageName={page?.pageName}
-						/>
-					)
-				})
-			) : (
-				<EmptyState />
-			)}
-		</Layout>
-	)
-}
+          if (section.type === "intro") {
+            return <Component {...section} pageName={page?.pageName} />;
+          }
+          return (
+            <Section
+              key={section.id}
+              type={section.type}
+              heading={section.heading}
+              description={section.description}
+              theme={section.theme?.theme}
+              className={section.slug}
+            >
+              <Component {...section} pageName={page?.pageName} />
+            </Section>
+          );
+        })
+      ) : (
+        <EmptyState />
+      )}
+    </Layout>
+  );
+};
 
 // --- Empty state ---
 function EmptyState() {
-	return IS_DEV ? (
-		<div className="flex items-center justify-center w-full py-32">
-			<div className="border-4 border-gray-400 rounded p-16 border-dashed flex flex-col gap-2 items-center">
-				<span className="text-2xl">Empty page! add sections.</span>
-				<span>(this message does not appear in production)</span>
-			</div>
-		</div>
-	) : null
+  return IS_DEV ? (
+    <div className="flex items-center justify-center w-full py-32">
+      <div className="border-4 border-gray-400 rounded p-16 border-dashed flex flex-col gap-2 items-center">
+        <span className="text-2xl">Empty page! add sections.</span>
+        <span>(this message does not appear in production)</span>
+      </div>
+    </div>
+  ) : null;
 }
 
 // --- getStaticPaths ---
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
-	const routesPromises =
-		locales?.map(async (locale) => await getPagePaths(locale)) || []
-	const pathsArray = await Promise.all(routesPromises)
-	const paths = pathsArray.flatMap((p) => p)
+  const routesPromises = locales?.map(async (locale) => await getPagePaths(locale)) || [];
+  const pathsArray = await Promise.all(routesPromises);
+  const paths = pathsArray.flatMap((p) => p);
 
-	return { paths, fallback: false }
-}
+  return { paths, fallback: false };
+};
 
 // --- getStaticProps ---
 export const getStaticProps = async ({ params, locale }) => {
   const slugArray = params?.slug ?? [];
-	const slug = "/" + slugArray.filter(Boolean).join("/");
+  const slug = "/" + slugArray.filter(Boolean).join("/");
 
   const pageLocale = locale || localization.defaultLocale;
 
-  const [siteConfig, allPages] = await Promise.all([
-    getSiteConfig(pageLocale),
-    getPages(pageLocale),
-  ]);
+  const [siteConfig, allPages] = await Promise.all([getSiteConfig(pageLocale), getPages(pageLocale)]);
 
-  const page = allPages.find(
-    (e) => normalizeSlug(e.slug) === slug && e.locale === pageLocale
-  );
+  const page = allPages.find((e) => normalizeSlug(e.slug) === slug && e.locale === pageLocale);
 
   if (!page) {
     console.warn("Did not find page for:", params, "locale:", locale);
@@ -119,4 +110,4 @@ export const getStaticProps = async ({ params, locale }) => {
   };
 };
 
-export default ComposablePage
+export default ComposablePage;

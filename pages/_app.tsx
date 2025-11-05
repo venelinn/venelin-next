@@ -8,7 +8,7 @@ import { TransitionContextProvider } from "../context/transitionContext";
 import useNextCssRemovalPrevention from "../hooks/useNextCssRemovalPrevention";
 import { DataProvider } from "../utils/DataProvider";
 
-import "@/styles/globals.scss";
+import "@/styles/style.scss";
 
 gsap.registerPlugin(ScrollTrigger);
 

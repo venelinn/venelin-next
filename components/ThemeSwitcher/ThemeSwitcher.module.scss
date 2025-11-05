@@ -1,0 +1,104 @@
+
+.themeToggle1 {
+	border-radius: 50%;
+  display: block;
+  width: 1.3rem;
+  height: 1.3rem;
+  overflow: hidden;
+  transition: 0.5s all ease;
+	position: relative;
+  @media (hover: hover) {
+		&:hover {
+			cursor: pointer;
+    }
+  }
+  &:before {
+		content: "";
+    display: block;
+    position: absolute;
+  }
+  &[data-theme="dark"] {
+    &:before {
+      background-color: var(--theme-shade);
+      border-radius: 50%;
+      box-shadow: 10px 0 0 -3.5px var(--theme-shade),
+        -10px 0 0 -3.5px var(--theme-shade),
+        0 -10px 0 -3.5px var(--theme-shade),
+        0 10px 0 -3.5px var(--theme-shade),
+        7px -7px 0 -3.5px var(--theme-shade),
+        7px 7px 0 -3.5px var(--theme-shade),
+        -7px 7px 0 -3.5px var(--theme-shade),
+        -7px -7px 0 -3.5px var(--theme-shade);
+      height: 10px;
+      left: 7px;
+      top: 7px;
+      width: 10px;
+    }
+    @media (hover: hover) {
+      &:hover {
+        transform: scale(1.2);
+        &:before {
+          background-color: var(--color-white);
+          box-shadow: 10px 0 0 -3.5px var(--color-white),
+                      -10px 0 0 -3.5px var(--color-white),
+                      0 -10px 0 -3.5px var(--color-white),
+                      0 10px 0 -3.5px var(--color-white),
+                      7px -7px 0 -3.5px var(--color-white),
+                      7px 7px 0 -3.5px var(--color-white),
+                      -7px 7px 0 -3.5px var(--color-white),
+                      -7px -7px 0 -3.5px var(--color-white);
+        }
+      }
+    }
+  }
+
+  // DARK mode
+  &[data-theme="light"] {
+    background-color: transparent;
+    box-shadow: inset 10px -8px 0px -2px var(--theme-shade);
+    animation-duration: .5s;
+    animation-name: moon;
+    @media (hover: hover) {
+      &:hover {
+        box-shadow: inset 10px -8px 0px -2px var(--color-white);
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+
+@keyframes sun {
+  from {
+    background-color: var(--light-shade);
+    box-shadow: 0 0 0 -5px var(--light-shade),
+                0 0 0 -5px var(--light-shade),
+                0 0 0 -5px var(--light-shade),
+                0 0 0 -5px var(--light-shade),
+                0 0 0 -5px var(--light-shade),
+                0 0 0 -5px var(--light-shade),
+                0 0 0 -5px var(--light-shade),
+                0 0 0 -5px var(--light-shade);
+  }
+  to {
+    background-color: var(--light-shade);
+    box-shadow: 10px 0 0 -3.5px var(--light-shade),
+                -10px 0 0 -3.5px var(--light-shade),
+                0 -10px 0 -3.5px var(--light-shade),
+                0 10px 0 -3.5px var(--light-shade),
+                7px -7px 0 -3.5px var(--light-shade),
+                7px 7px 0 -3.5px var(--light-shade),
+                -7px 7px 0 -3.5px var(--light-shade),
+                -7px -7px 0 -3.5px var(--light-shade);
+  }
+}
+
+
+.text {
+	text-transform: capitalize;
+	cursor: pointer;
+}
+
+.icon {
+	cursor: pointer;
+}

@@ -1,19 +1,15 @@
-import { renderRichTextContent } from "../../utils/RichText";
 import { Hero } from "./Hero";
 
-const HeroConnector = (props) => {
-	return (
-		<Hero
-			id={props?.id}
-			images={props?.images}
-			locale={props?.locale}
-			animationID={props?.animationID}
-			content={renderRichTextContent(props?.content)}
-			description={props?.description}
-			height={props?.height}
-		/>
-	);
+export const HeroConnector = (props) => {
+  return (
+    <Hero
+      id={props?.id}
+      media={props?.media}
+      heading={props?.heading}
+      subHeading={props?.subHeading}
+      description={props?.description}
+      links={props?.links}
+      theme={props?.theme.theme}
+    />
+  );
 };
-
-export default HeroConnector;
-export { HeroConnector };

@@ -1,0 +1,79 @@
+@use "styles/variables" as base;
+
+.grid--about {
+  display: grid;
+  justify-items: center;
+  margin: 0 auto;
+}
+
+.about__intro {
+  max-width: var(--page-max-width);
+  margin: var(--_about-margin, 1rem auto 3rem);
+  @media (width > base.$smedium) {
+    --_about-margin: 1rem auto 4rem;
+  }
+
+  h4 {
+    margin-bottom: 0px;
+    margin: 2rem 0 1rem;
+  }
+}
+
+.about__content {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--page-max-width);
+}
+
+.about__label {
+  font-size: 1.1rem;
+  color: var(--color-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-weight: bold;
+}
+
+.about__info-list {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  li {
+    margin-bottom: 0.6rem;
+  }
+  @media (width > base.$smedium + 1) {
+    margin: 2rem 0 0 0;
+    li {
+      padding: 0 0 1.5rem 0;
+    }
+  }
+  strong {
+    opacity: 0.6;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    line-height: 2rem;
+  }
+  span {
+    display: block;
+    line-height: 1;
+  }
+  @media (width < base.$smedium) {
+    margin: 0.7rem 0 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+  }
+}
+
+.about__cta {
+  .button {
+    color: rgba(0, 0, 0, 0.8);
+    margin-top: 0.6rem;
+    border-color: rgba(0, 0, 0, 0.8);
+    &:hover,
+    &:focus {
+      border-color: var(--base-color);
+      color: var(--base-color);
+    }
+  }
+}
