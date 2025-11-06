@@ -1,12 +1,23 @@
 @use "styles/variables" as base;
 
 .hero {
-  position: fixed;
+  position: absolute;
   overflow: hidden;
   width: 100%;
   z-index: -1;
   height: 100vh;
-  animation: hue 15s infinite ease-in-out both;
+  &--overlay {
+    &:before {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background-color: var(--section-image-overlay-color, rgba(0, 0, 0, 0.3));
+      z-index: 1;
+    }
+  }
+  &--hue {
+    animation: hue 15s infinite ease-in-out both;
+  }
 }
 
 .hero__image {
@@ -135,6 +146,7 @@
         .button {
           border-top-left-radius: 0;
           border-bottom-left-radius: 0;
+          border-left-color: transparent;
         }
       }
     }
@@ -179,4 +191,16 @@
 
 .intro__social {
   animation-delay: 1.5s;
+}
+
+@keyframes hue {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(100deg);
+  }
+  100% {
+    filter: hue-rotate(0deg);
+  }
 }

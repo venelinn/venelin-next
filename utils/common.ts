@@ -22,24 +22,34 @@ export interface ImageData {
   [key: string]: any;
 }
 
-export function getOptimizedImage(image?: CloudinaryImage | ImageData, width = 500, quality: string | number = "auto") {
-  if (!image) return { url: "", width: 0, height: 0 };
+export function getOptimizedImage(
+  image?: CloudinaryImage | ImageData,
+  width = 500,
+  quality: string | number = "auto",
+  aspectRatio?: number, // optional custom aspect ratio
+) {
+  if (!image) return { url: "", width: 0, height: 0, aspectRatio: 0 };
 
   const src = "src" in image ? image.src : image.url;
-  if (!src) return { url: "", width: 0, height: 0 };
+  if (!src) return { url: "", width: 0, height: 0, aspectRatio: 0 };
 
   // Ensure HTTPS (Next.js remotePatterns requires https)
   const secureSrc = src.replace(/^http:\/\//i, "https://");
 
-  const imgWidth = image.width || width;
-  const imgHeight = image.height || width; // fallback
-  const aspectRatio = imgWidth / imgHeight;
-  const newHeight = Math.round(width / aspectRatio);
+  const originalWidth = image.width || width;
+  const originalHeight = image.height || width;
+
+  // determine ratio
+  const ratio = aspectRatio || originalWidth / originalHeight || 1;
+  const height = Math.round(width / ratio);
+
+  const optimizedUrl = secureSrc.replace("/upload/", `/upload/w_${width},h_${height},c_fill,q_${quality}/`);
 
   return {
-    url: secureSrc.replace("/upload/", `/upload/w_${width},q_${quality}/`),
+    url: optimizedUrl,
     width,
-    height: newHeight,
+    height,
+    aspectRatio: ratio,
   };
 }
 

@@ -1,4 +1,4 @@
-@use 'styles/variables' as base;
+@use "styles/variables" as base;
 
 .portfolio {
   @media (width > base.$smedium) {
@@ -31,13 +31,14 @@
   }
   &:before {
     transition: all 0.5s ease-in-out;
-    content: '';
+    content: "";
     position: absolute;
     background-color: var(--_folio-bg, transparent);
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: 1;
   }
   @media (any-hover: hover) {
     &:hover {
@@ -48,10 +49,7 @@
   }
   @media (any-hover: none) {
     &:before {
-      background: linear-gradient(
-        rgba(0, 0, 0, 0.1) 50%,
-        rgba(0, 0, 0, 0.9) 100%
-      );
+      background: linear-gradient(rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.9) 100%);
     }
     .folio__item__cell {
       left: 0;
@@ -61,6 +59,8 @@
     display: block;
     object-fit: cover;
     aspect-ratio: inherit;
+    width: 100%;
+    height: 100%;
   }
   &__link {
     display: block;
@@ -111,7 +111,7 @@
   }
   a {
     &:after {
-      content: '';
+      content: "";
       cursor: pointer;
       inset-block: 0;
       inset-inline: 0;

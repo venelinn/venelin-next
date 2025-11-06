@@ -29,7 +29,7 @@ export const Portfolio = ({ items }: PortfolioProps) => {
             {items.map((item) => {
               const media = item?.media;
               const thumb = Array.isArray(media) ? media[0] : media;
-              const { url, width, height } = getOptimizedImage(thumb, 800, "100");
+              const { url, width, height } = getOptimizedImage(thumb, 800, "100", 1 / 1);
               if (!thumb) return null;
 
               return (

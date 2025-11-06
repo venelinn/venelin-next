@@ -1,7 +1,10 @@
 import cx from "clsx";
 import Image from "next/image";
+import { useMemo } from "react";
 import Plx from "react-plx";
-import type { Theme } from "@/types/types";
+import { Social } from "@/components/Social";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import type { SocialType, Theme } from "@/types/types";
 import { getOptimizedImage } from "@/utils/common";
 import styles from "./Hero.module.scss";
 
@@ -13,18 +16,43 @@ interface HeroProps {
   media: any;
   links: any;
   theme: Theme[];
+  hasHue?: boolean;
+  hasOverlay?: boolean;
+  random?: boolean;
+  social?: SocialType[];
 }
 
-export const Hero = ({ heading, subHeading, description, media, links, theme }: HeroProps) => {
-  const mainImage = media?.[0].image?.[0];
-  const { url, width, height } = getOptimizedImage(mainImage, 800, "100");
+export const Hero = ({
+  heading,
+  subHeading,
+  description,
+  media,
+  links,
+  theme,
+  hasHue,
+  hasOverlay,
+  random,
+  social,
+}: HeroProps) => {
+  const selectedImage = useMemo(() => {
+    if (!media.length) return undefined;
+    if (random && media.length > 1) {
+      const idx = Math.floor(Math.random() * media.length);
+      return media[idx];
+    }
+    return media[0];
+  }, [media, random]);
+
+  // Safely get optimized image
+  const { url, width, height } = getOptimizedImage(selectedImage, 1500, "100");
   return (
-    <section className={styles.intro} data-theme={theme}>
-      <div className={styles.hero} data-hero>
+    <section className={cx(styles.intro, "full-width")} data-theme={theme}>
+      <div className={cx(styles.hero, hasHue && styles["hero--hue"], hasOverlay && styles["hero--overlay"])} data-hero>
         <Plx
           parallaxData={[
             {
-              start: 1,
+              start: 0,
+              end: 600,
               duration: "[data-hero]",
               properties: [{ startValue: 1, endValue: 1.3, property: "scale" }],
             },
@@ -57,7 +85,8 @@ export const Hero = ({ heading, subHeading, description, media, links, theme }: 
           ))}
         </ul>
       </div>
-      {/* <Social data={social} /> */}
+      <ThemeSwitcher />
+      <Social data={social ?? []} />
     </section>
   );
 };

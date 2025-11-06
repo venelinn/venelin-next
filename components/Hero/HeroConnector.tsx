@@ -10,6 +10,10 @@ export const HeroConnector = (props) => {
       description={props?.description}
       links={props?.links}
       theme={props?.theme.theme}
+      hasHue={props?.hasHue}
+      hasOverlay={props?.hasOverlay}
+      random={props?.random}
+      social={props?.social}
     />
   );
 };

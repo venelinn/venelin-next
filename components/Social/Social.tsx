@@ -1,5 +1,5 @@
+import { Icon, type IconName } from "@/components/Icon";
 import type { SocialType } from "../../types/types";
-import { Icon, type IconName } from "../Icon";
 import styles from "./Social.module.scss";
 
 interface SocialProps {

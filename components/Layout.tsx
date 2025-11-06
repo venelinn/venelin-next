@@ -13,7 +13,7 @@ interface LayoutProps {
 export const Layout = ({ children, navigationLinks = [], siteConfig, page }: LayoutProps) => {
   const seo = page?.metaData;
   const footer = siteConfig?.footer;
-  const allLinks = navigationLinks;
+  // const allLinks = navigationLinks;
   const footerNavLinks = navigationLinks.filter((link) => link.location === "footer");
   const footerLinks = footerNavLinks;
 
@@ -24,10 +24,7 @@ export const Layout = ({ children, navigationLinks = [], siteConfig, page }: Lay
       </Head>
       <MetaData title={seo?.pageTitle} description={seo?.pageDescription} keywords={seo?.keywords} />
       {children}
-      <Footer
-        siteConfig={footer}
-        // links={footerLinks || []}
-      />
+      <Footer siteConfig={footer} links={footerLinks || []} />
     </>
   );
 };

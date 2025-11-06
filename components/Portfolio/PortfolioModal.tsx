@@ -57,7 +57,7 @@ export const PortfolioModal = ({ item, onClose }: PortfolioModalProps) => {
 
             // Single image → display optimized image
             const thumb = mediaArray[0];
-            const { url, width, height } = getOptimizedImage(thumb, 800, "100");
+            const { url, width, height } = getOptimizedImage(thumb, 700, "100");
             if (!url) return null;
 
             return (

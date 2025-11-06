@@ -40,7 +40,15 @@ const ComposablePage: NextPage<Props> = ({ page, siteConfig, navigationLinks }) 
           if (!Component) return null;
 
           if (section.type === "intro") {
-            return <Component {...section} pageName={page?.pageName} />;
+            return (
+              <Component
+                key={section.id}
+                social={siteConfig?.social}
+                pageName={page?.pageName}
+                size={section.size}
+                {...section}
+              />
+            );
           }
           return (
             <Section
@@ -48,8 +56,8 @@ const ComposablePage: NextPage<Props> = ({ page, siteConfig, navigationLinks }) 
               type={section.type}
               heading={section.heading}
               description={section.description}
-              theme={section.theme?.theme}
               className={section.slug}
+              size={section?.size?.contentSize}
             >
               <Component {...section} pageName={page?.pageName} />
             </Section>
