@@ -1,0 +1,20 @@
+{
+  "name": "Venelin.ca",
+  "short_name": "Venelin",
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "description": "Front-end developer | UI/UX",
+  "display": "minimal-ui",
+  "lang": "en-US",
+  "icons": [
+    { "src": "favicon-48x48.png?v=a0919b1dc5abc206e1de7978cefa0348", "sizes": "48x48", "type": "image/png" },
+    { "src": "favicon-72x72.png?v=a0919b1dc5abc206e1de7978cefa0348", "sizes": "72x72", "type": "image/png" },
+    { "src": "favicon-96x96.png?v=a0919b1dc5abc206e1de7978cefa0348", "sizes": "96x96", "type": "image/png" },
+    { "src": "favicon-144x144.png?v=a0919b1dc5abc206e1de7978cefa0348", "sizes": "144x144", "type": "image/png" },
+    { "src": "favicon-192x192.png?v=a0919b1dc5abc206e1de7978cefa0348", "sizes": "192x192", "type": "image/png" },
+    { "src": "favicon-256x256.png?v=a0919b1dc5abc206e1de7978cefa0348", "sizes": "256x256", "type": "image/png" },
+    { "src": "favicon-384x384.png?v=a0919b1dc5abc206e1de7978cefa0348", "sizes": "384x384", "type": "image/png" },
+    { "src": "favicon-512x512.png?v=a0919b1dc5abc206e1de7978cefa0348", "sizes": "512x512", "type": "image/png" }
+  ]
+}

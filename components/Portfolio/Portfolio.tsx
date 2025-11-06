@@ -1,3 +1,4 @@
+import cx from "clsx";
 import Image from "next/image";
 import { useState } from "react";
 import { Fade } from "react-awesome-reveal";
@@ -34,17 +35,12 @@ export const Portfolio = ({ items }: PortfolioProps) => {
 
               return (
                 <div className={styles.folio} key={item.id}>
-                  <div className={styles.folio__item}>
-                    <h3 className={styles.folio__item__name}>{item.name}</h3>
-                    <span className={styles.folio__item__types}>{item.types}</span>
-                  </div>
-                  <button
-                    type="button"
-                    className={styles.folio__link}
-                    title={item.name}
-                    onClick={() => setActiveItem(item)}
-                  >
+                  <button type="button" className={styles.folio__link} onClick={() => setActiveItem(item)}>
                     <Image src={url} alt={item.name} width={width} height={height} unoptimized={false} />
+                    <span className={styles.folio__item}>
+                      <strong className={styles.folio__item__name}>{item.name}</strong>
+                      <span className={styles.folio__item__types}>{item.types}</span>
+                    </span>
                   </button>
                 </div>
               );

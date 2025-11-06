@@ -31,6 +31,12 @@
     position: relative;
     flex: 0 0 100%;
     width: 100%;
+    // aspect-ratio: 1 / 1;
+    img {
+      display: block;
+      height: 100%;
+      // object-fit: cover;
+    }
   }
   &__snapper {
     position: absolute;
@@ -96,7 +102,6 @@
 .carousel:focus-within .carousel__snapper {
   animation-name: none;
 }
-
 
 @keyframes tonext {
   75% {

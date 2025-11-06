@@ -57,7 +57,7 @@ export const PortfolioModal = ({ item, onClose }: PortfolioModalProps) => {
 
             // Single image → display optimized image
             const thumb = mediaArray[0];
-            const { url, width, height } = getOptimizedImage(thumb, 700, "100");
+            const { url, width, height } = getOptimizedImage(thumb, 1000, "100");
             if (!url) return null;
 
             return (
@@ -77,7 +77,7 @@ export const PortfolioModal = ({ item, onClose }: PortfolioModalProps) => {
             )}
           </div>
           {item.description && <p>{item.description}</p>}
-          {item.types && <div className={styles.modal__categories}>{item.types}</div>}
+          {item.types && <div className={styles.modal__categories}>Stack: {item.types}</div>}
         </div>
 
         <div className={styles.modal__footer}>

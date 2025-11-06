@@ -25,36 +25,11 @@
   @media (prefers-color-scheme: dark) {
     border: 1px solid var(--border-color);
   }
-  .gatsby-image-wrapper {
+  img {
     transition: all 0.5s ease-in-out;
     transform: var(--_folio-scale, scale(1));
   }
-  &:before {
-    transition: all 0.5s ease-in-out;
-    content: "";
-    position: absolute;
-    background-color: var(--_folio-bg, transparent);
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-  }
-  @media (any-hover: hover) {
-    &:hover {
-      --_folio-left: 0;
-      --_folio-scale: scale(1.05);
-      --_folio-bg: rgba(0, 0, 0, 0.7);
-    }
-  }
-  @media (any-hover: none) {
-    &:before {
-      background: linear-gradient(rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.9) 100%);
-    }
-    .folio__item__cell {
-      left: 0;
-    }
-  }
+
   img {
     display: block;
     object-fit: cover;
@@ -64,9 +39,34 @@
   }
   &__link {
     display: block;
-    position: relative;
     width: 100%;
     aspect-ratio: inherit;
+    position: relative;
+    &:after {
+      transition: all 0.5s ease-in-out;
+      content: "";
+      position: absolute;
+      background-color: var(--_folio-bg, transparent);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    @media (any-hover: hover) {
+      &:hover {
+        --_folio-left: 0;
+        --_folio-scale: scale(1.05);
+        --_folio-bg: rgba(0, 0, 0, 0.7);
+      }
+    }
+    @media (any-hover: none) {
+      &:after {
+        background: linear-gradient(rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.9) 100%);
+      }
+      .folio__item__cell {
+        left: 0;
+      }
+    }
   }
 }
 
@@ -76,12 +76,14 @@
   align-content: center;
   text-align: center;
   position: absolute;
+  isolation: isolate;
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
   color: #fff;
+  padding: 1rem;
   pointer-events: none;
+  z-index: 1;
   left: var(--_folio-left, -100%);
   @media (any-hover: hover) {
     align-items: center;
@@ -103,9 +105,11 @@
   }
 }
 
-.folio__item__title {
+.folio__item__name {
   margin-bottom: 0;
+  text-wrap: balance;
   font-size: var(--_folio-title, 1.5rem);
+  font-family: var(--header-font);
   @media (width > base.$medium) {
     --_folio-title: 2rem;
   }

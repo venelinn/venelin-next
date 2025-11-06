@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/a11y/noNoninteractiveTabindex: <explanation> */
 import cx from "clsx";
 import Image from "next/image";
 import { getOptimizedImage } from "@/utils/common";
@@ -10,7 +11,7 @@ interface PortfolioSliderProps {
 
 export const PortfolioSlider = ({ media }: PortfolioSliderProps) => {
   return (
-    <section className={styles.carousel} aria-label="Gallery">
+    <aside className={styles.carousel} aria-label="Gallery">
       <ol className={styles.carousel__viewport}>
         {(() => {
           if (!media) return null;
@@ -22,7 +23,7 @@ export const PortfolioSlider = ({ media }: PortfolioSliderProps) => {
             if (!url) return null;
 
             return (
-              <li key={idx} id={`carousel__slide${idx}`} tabIndex={0} className={styles.carousel__slide}>
+              <li key={img.id} id={`carousel__slide${idx}`} tabIndex={0} className={styles.carousel__slide}>
                 <Image src={url} width={width} height={height} alt={`Portfolio image ${idx}`} loading="lazy" />
                 <span className={styles.carousel__snapper}>
                   {idx > 0 && (
@@ -47,6 +48,6 @@ export const PortfolioSlider = ({ media }: PortfolioSliderProps) => {
           });
         })()}
       </ol>
-    </section>
+    </aside>
   );
 };

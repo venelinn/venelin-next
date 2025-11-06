@@ -18,6 +18,9 @@
   &[closing] {
     animation: slide-down 1s ease;
   }
+  @media (width <= base.$medium) {
+    max-width: 98%;
+  }
 }
 
 .modal {
@@ -29,7 +32,7 @@
     margin: 0 auto;
   }
   @media (width <= base.$medium) {
-    width: 90%;
+    width: 100%;
   }
   &__header {
     padding: 0.3rem 0.3rem 0;
@@ -40,7 +43,7 @@
       }
     }
     img {
-      width: 100%;
+      height: 100%;
     }
   }
 
@@ -55,6 +58,7 @@
       color: var(--base-color);
       a {
         color: inherit;
+        text-decoration: none;
         &:hover {
           text-decoration: underline;
         }
@@ -91,6 +95,7 @@
       text-align: center;
       flex: 1;
       transition: all 0.3s ease-in-out;
+      text-decoration: none;
       &:first-child {
         border-left: 1px solid rgba(var(--color-white), 0.3);
       }
