@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://venelin.ca
+
+# Sitemaps
+Sitemap: https://venelin.ca/sitemap.xml

@@ -1,0 +1,145 @@
+@use "styles/variables" as base;
+
+.modal-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(var(--color-black), 0.7);
+  padding: 0;
+  &::backdrop {
+    background: rgb(0 0 0 / 0.6);
+    backdrop-filter: blur(5px);
+  }
+
+  &[open] {
+    animation: slide-up 1000ms forwards, fade-in 500ms forwards;
+  }
+
+  &[closing] {
+    animation: slide-down 1s ease;
+  }
+  @media (width <= base.$medium) {
+    max-width: 98%;
+  }
+}
+
+.modal {
+  background: #fff;
+  padding: 0;
+  top: 1rem;
+  @media (width > base.$medium) {
+    width: 700px;
+    margin: 0 auto;
+  }
+  @media (width <= base.$medium) {
+    width: 100%;
+  }
+  &__header {
+    padding: 0.3rem 0.3rem 0;
+    &[data-slider] > div {
+      height: var(--slider-height, 560px);
+      @media (width < base.$medium) {
+        --slider-height: 310px;
+      }
+    }
+    img {
+      height: 100%;
+    }
+  }
+
+  &__content {
+    padding: var(--modal-content, 2rem);
+    @media (width < base.$medium) {
+      --modal-content: 1.5rem;
+    }
+    &__name {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--base-color);
+      a {
+        color: inherit;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    p {
+      @media (width < base.$smedium) {
+        font-size: 80%;
+      }
+    }
+  }
+  &__categories {
+    font-size: 0.9rem;
+    display: block;
+    text-align: left;
+    color: rgba(var(--color-black), 0.5);
+    margin-top: 1rem;
+  }
+  &__footer {
+    display: flex;
+    flex-direction: row-reverse;
+    background: #000;
+    a,
+    button {
+      font-size: 0.9rem;
+      line-height: 4rem;
+      color: #fff;
+      border: 0;
+      background-color: inherit;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      cursor: pointer;
+      display: block;
+      text-align: center;
+      flex: 1;
+      transition: all 0.3s ease-in-out;
+      text-decoration: none;
+      &:first-child {
+        border-left: 1px solid rgba(var(--color-white), 0.3);
+      }
+      &:hover {
+        color: #fff;
+        background-color: var(--base-color);
+        border: none;
+      }
+    }
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

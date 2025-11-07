@@ -1,0 +1,27 @@
+.section {
+  padding: 3rem 1.5rem;
+  background-color: var(--theme-background);
+  &:nth-child(odd) {
+    --theme-background: var(--bg-odd);
+  }
+  &:nth-child(even) {
+    --theme-background: var(--bg-even);
+  }
+}
+
+.section__inner {
+  max-width: var(--page-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.section__content {
+  max-width: var(--page-width);
+  margin-left: auto;
+  margin-right: auto;
+  &--full {
+    max-width: 100%;
+  }
+}

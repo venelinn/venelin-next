@@ -1,0 +1,8 @@
+@use "styles/variables" as base;
+
+.about__intro {
+  margin: var(--_about-margin, 1rem auto 3rem);
+  @media (width > base.$smedium) {
+    --_about-margin: 1rem auto 4rem;
+  }
+}
