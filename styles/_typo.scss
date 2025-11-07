@@ -1,4 +1,4 @@
-@use 'styles/variables' as base;
+@use "./variables" as base;
 
 @mixin h1 {
   line-height: 1.071;
