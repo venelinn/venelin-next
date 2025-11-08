@@ -1,4 +1,3 @@
-import cx from "clsx";
 import Image from "next/image";
 import { useState } from "react";
 import { Fade } from "react-awesome-reveal";
