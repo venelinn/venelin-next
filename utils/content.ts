@@ -1,15 +1,8 @@
-import { type ChainModifiers, type ContentfulClientApi, createClient, Entry, type EntryCollection } from "contentful";
+import { type ContentfulClientApi, createClient, type EntryCollection } from "contentful";
 import { IS_DEV, normalizeSlug, PAGE_TYPE, SITE_CONFIG_TYPE } from "./common";
 import localization from "./localization";
 
-// const client = createClient({
-//   space: process.env.CONTENTFUL_SPACE_ID || "",
-//   accessToken: process.env.CONTENTFUL_DELIVERY_TOKEN || "",
-//   environment: process.env.CONTENTFUL_ENVIRONMENT || "master",
-//   host: "cdn.contentful.com",
-// });
-
-type ContentfulClient = ContentfulClientApi<ChainModifiers>;
+type ContentfulClient = ContentfulClientApi<any>;
 
 export function getClient(isPreview: boolean): ContentfulClient {
   const isProd = process.env.NODE_ENV === "production";
@@ -17,9 +10,7 @@ export function getClient(isPreview: boolean): ContentfulClient {
   // Choose the token and host based on the flag
   const accessToken = isPreview ? process.env.CONTENTFUL_PREVIEW_TOKEN : process.env.CONTENTFUL_DELIVERY_TOKEN;
 
-  const host = isPreview
-    ? "preview.contentful.com" // CRUCIAL for DRAFTS
-    : "cdn.contentful.com"; // Standard for PUBLISHED
+  const host = isPreview ? process.env.CONTENTFUL_HOST : "cdn.contentful.com";
 
   // Validate the token and host for safety
   if (!accessToken) {

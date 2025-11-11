@@ -95,7 +95,12 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 // --- getStaticProps ---
 export const getStaticProps: GetStaticProps = async ({ params, locale, preview }) => {
   // 💡 Include 'preview' in destructuring
-  const slugArray = params?.slug ?? [];
+  const slugParam = params?.slug;
+
+  // Ensure slugArray is always an array of strings
+  const slugArray = Array.isArray(slugParam) ? slugParam : slugParam ? [slugParam] : [];
+
+  // Now filter and join works safely on the array
   const slug = "/" + slugArray.filter(Boolean).join("/");
 
   const pageLocale = locale || localization.defaultLocale;
