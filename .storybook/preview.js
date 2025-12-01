@@ -1,4 +1,4 @@
-/** @type { import('@storybook/nextjs').Preview } */
+/** @type { import('@storybook/nextjs-vite').Preview } */
 import "../styles/style.scss"
 const preview = {
 	parameters: {

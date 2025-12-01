@@ -1,3 +1,4 @@
+// This file has been automatically migrated to valid ESM format by Storybook.
 import { fileURLToPath } from "node:url"
 import dotenv from "dotenv"
 import path, { dirname } from "path"
@@ -8,7 +9,7 @@ const __dirname = dirname(__filename)
 
 dotenv.config()
 
-/** @type { import('@storybook/nextjs').StorybookConfig } */
+/** @type { import('@storybook/nextjs-vite').StorybookConfig } */
 const config = {
 	stories: [
 		"../components/**/*.mdx",
@@ -18,7 +19,7 @@ const config = {
 	addons: ["@storybook/addon-links", "@storybook/addon-docs"],
 
 	framework: {
-		name: "@storybook/nextjs",
+		name: "@storybook/nextjs-vite",
 		options: {
 			nextConfigPath: path.resolve(__dirname, "../next.config.js"),
 		},
