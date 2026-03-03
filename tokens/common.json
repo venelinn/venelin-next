@@ -13,7 +13,7 @@
 			"value": "0 1px 2px"
 		},
 		"base": {
-			"value": "{box-shadow.size.value} {box-shadow.color.value}"
+			"value": "{box-shadow.size} {box-shadow.color}"
 		}
 	},
 	"padding": {

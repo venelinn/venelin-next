@@ -5,8 +5,10 @@ const localization = {
 	nonLocalizedModels: ["siteConfig"],
 }
 
-module.exports = {
-	...localization,
-	getContentfulLocale: (locale) =>
-		localization.contentfulLocales[localization.locales.indexOf(locale)],
-}
+export const getContentfulLocale = (locale) =>
+	localization.contentfulLocales[localization.locales.indexOf(locale)]
+
+export const { contentfulLocales, locales, defaultLocale, nonLocalizedModels } =
+	localization
+
+export default localization

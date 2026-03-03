@@ -1,10 +1,10 @@
-module.exports = {
+export default {
 	siteUrl: process.env.NEXT_PUBLIC_BASE_URL || "https://docharge.me",
 	generateRobotsTxt: true,
 	additionalPaths: async (config) => {
 		return [
 			{
-				loc: "/", // Use "loc" instead of "path"
+				loc: "/",
 				priority: 0.4,
 				changefreq: "monthly",
 			},
@@ -43,6 +43,6 @@ module.exports = {
 				priority: 0.8,
 				changefreq: "monthly",
 			},
-		];
+		]
 	},
-};
+}

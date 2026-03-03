@@ -1,6 +1,7 @@
 import cx from "clsx";
+import gsap, { SplitText } from "gsap/SplitText";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import Plx from "react-plx";
 import { Social } from "@/components/Social";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
@@ -43,6 +44,25 @@ export const Hero = ({
     return media[0];
   }, [media, random]);
 
+  const titleRef = useRef(null);
+  useEffect(() => {
+    // Check if the ref is attached to the element
+    if (titleRef.current) {
+      // This code now runs safely after the h1 exists
+      const split = new SplitText(titleRef.current, { type: "chars" });
+      // // You can now animate it (e.g., on load)
+      // gsap.from(split.chars, {
+      //   opacity: 0,
+      //   y: 20,
+      //   stagger: 0.05,
+      //   duration: 0.8,
+      //   ease: "power2.out",
+      // });
+    }
+
+    // The empty array [] means this effect runs once on mount
+  }, []);
+
   // Safely get optimized image
   const { url, width, height } = getOptimizedImage(selectedImage, 1500, "100");
   return (
@@ -71,7 +91,9 @@ export const Hero = ({
       </div>
       <div className={styles.intro__content}>
         <div className={cx(styles.intro__msg, "title--h2")}>{subHeading}</div>
-        <h1 className={cx(styles.intro__title, "title title--h1")}>{heading}</h1>
+        <h1 ref={titleRef} className={cx(styles.intro__title, "title title--h1")}>
+          {heading}
+        </h1>
         <p className={styles.intro__position}>
           <span>{description}</span>
         </p>
