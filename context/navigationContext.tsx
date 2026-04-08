@@ -2,15 +2,15 @@ import { useRouter } from "next/router"
 import React, {
 	createContext,
 	type ReactNode,
+	useCallback,
 	useContext,
 	useEffect,
+	useRef,
 	useState,
 } from "react"
 import useLockedScroll from "../hooks/useLockedScroll"
-import useScrollbar from "../hooks/useScrollbar"
 import useWindowSize from "../hooks/useWindowSize"
 
-// --- Context value type ---
 type NavigationContextType = {
 	ref: HTMLElement | null
 	setRef: (el: HTMLElement | null) => void
@@ -22,7 +22,6 @@ type NavigationContextType = {
 	toggle: () => void
 }
 
-// --- Create context ---
 const NavigationContext = createContext<NavigationContextType>({
 	ref: null,
 	setRef: () => {},
@@ -34,55 +33,57 @@ const NavigationContext = createContext<NavigationContextType>({
 	toggle: () => {},
 })
 
-// --- Provider props type ---
 type NavigationContextProviderProps = {
 	children: ReactNode
 }
 
-// --- Provider component ---
+const NAV_HEIGHT = 100
+
 export function NavigationContextProvider({
 	children,
 }: NavigationContextProviderProps) {
 	const [ref, setRef] = useState<HTMLElement | null>(null)
 	const [isOpen, setIsOpen] = useState(false)
-	const { scrollY } = useScrollbar()
 	const { windowSize, isDesktop } = useWindowSize()
 	const [locked, setLocked] = useLockedScroll(false)
 	const router = useRouter()
-
-	const navigationHeight = 100 // Height at which "stuck" triggers
 
 	const [isSticky, setIsSticky] = useState(false)
 	const [isStuck, setIsStuck] = useState(false)
 	const [isFixedAlwaysTrue, setIsFixedAlwaysTrue] = useState(false)
 
-	const toggle = () => {
-		setIsOpen(!isOpen)
-		setLocked(!locked)
-	}
+	const toggle = useCallback(() => {
+		setIsOpen((prev) => !prev)
+		setLocked((prev: boolean) => !prev)
+	}, [setLocked])
 
-useEffect(() => {
-  const handleScroll = () => {
-    const isScrollPastNavigation = scrollY > navigationHeight;
+	const rafRef = useRef(0)
 
-    // Use fallback of 0 if windowSize.height is undefined
-    // const height = windowSize.height ?? 0;
+	useEffect(() => {
+		const viewportHeight = windowSize.height ?? 0
 
-    setIsSticky(isScrollPastNavigation && scrollY > (windowSize.height ?? 0));
-    setIsStuck(scrollY > navigationHeight);
-  };
+		const onScroll = () => {
+			cancelAnimationFrame(rafRef.current)
+			rafRef.current = requestAnimationFrame(() => {
+				const y = window.scrollY
+				setIsStuck(y > NAV_HEIGHT)
+				setIsSticky(y > NAV_HEIGHT && y > viewportHeight)
+			})
+		}
 
-  window.addEventListener("scroll", handleScroll);
-  return () => window.removeEventListener("scroll", handleScroll);
-}, [scrollY, windowSize.height]);
-
+		window.addEventListener("scroll", onScroll, { passive: true })
+		return () => {
+			cancelAnimationFrame(rafRef.current)
+			window.removeEventListener("scroll", onScroll)
+		}
+	}, [windowSize.height])
 
 	useEffect(() => {
 		if (isDesktop) {
 			setIsOpen(false)
 			setLocked(false)
 		}
-	}, [isDesktop])
+	}, [isDesktop, setLocked])
 
 	useEffect(() => {
 		if (isOpen) {
@@ -92,7 +93,6 @@ useEffect(() => {
 
 		setIsFixedAlwaysTrue(false)
 
-		// Reset sticky/stuck on route change
 		requestAnimationFrame(() => {
 			setIsSticky(false)
 			setIsStuck(false)
@@ -124,7 +124,6 @@ useEffect(() => {
 	)
 }
 
-// --- Custom hook ---
 export default function useNavigationContext(): NavigationContextType {
 	return useContext(NavigationContext)
 }

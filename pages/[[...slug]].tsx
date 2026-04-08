@@ -124,7 +124,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale, preview }
     return { notFound: true, revalidate: 1 }; // Add revalidate for safety
   }
 
-  const navigationLinks = await getNavigationLinks(client, allPages, pageLocale); // 💡 Pass Client
+  const navigationLinks = getNavigationLinks(allPages, pageLocale);
 
   return {
     props: {

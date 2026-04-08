@@ -142,64 +142,8 @@ function parseField(value: any, locale: string) {
   return value;
 }
 
-async function getContentModel(client: ContentfulClient, contentType: string, locale: string) {
-  const contentfulLocale = localization.contentfulLocales[localization.locales.indexOf(locale)] || locale;
-
-  try {
-    const entries = await client.getEntries({
-      content_type: contentType,
-      ...{ locale: contentfulLocale },
-    });
-
-    const publishedEntries = entries.items.filter((entry) => !!(entry.sys as any).publishedAt);
-
-    return publishedEntries.map((entry) => entry.fields);
-  } catch (error: any) {
-    // 👇 graceful handling for missing content types
-    if (error.message?.includes("unknownContentType")) {
-      console.warn(`⚠️ Content type "${contentType}" does not exist in Contentful.`);
-      return []; // return empty list instead of throwing
-    }
-
-    console.error(`Error fetching entries for "${contentType}":`, error.message);
-    return [];
-  }
-}
-
-export async function getNavigationLinks(client: ContentfulClient, pages: any[], locale: string) {
-  const contentfulLocale = localization.contentfulLocales[localization.locales.indexOf(locale)] || locale;
-
-  // 👇 get custom links safely
-  const customLinks = await getContentModel(client, "customLinks", contentfulLocale);
-
-  // if no customLinks model, fallback to just pages
-  if (!Array.isArray(customLinks) || customLinks.length === 0) {
-    console.warn("No customLinks found — using only page-based navigation.");
-    return pages
-      .filter((e) => e.locale === locale)
-      .sort((a, b) => (a.order || 0) - (b.order || 0))
-      .map((e) => ({
-        pageName: e.pageName,
-        slug: normalizeSlug(e.slug),
-        locale: e.locale,
-        order: e.order ?? null,
-        location: e.location ?? null,
-      }));
-  }
-
-  // otherwise merge pages and custom links
-  const remappedCustomLinks = customLinks
-    .sort((a: any, b: any) => (a.order || 0) - (b.order || 0))
-    .map((link: any) => ({
-      pageName: link.text,
-      slug: link.url ?? null,
-      locale,
-      target: link.target,
-      order: link.order ?? null,
-      location: link.location ?? null,
-    }));
-
-  const navigationLinks = pages
+export function getNavigationLinks(pages: any[], locale: string) {
+  return pages
     .filter((e) => e.locale === locale)
     .sort((a, b) => (a.order || 0) - (b.order || 0))
     .map((e) => ({
@@ -209,6 +153,4 @@ export async function getNavigationLinks(client: ContentfulClient, pages: any[],
       order: e.order ?? null,
       location: e.location ?? null,
     }));
-
-  return [...navigationLinks, ...remappedCustomLinks];
 }

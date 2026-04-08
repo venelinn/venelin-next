@@ -1,5 +1,5 @@
 export default {
-	siteUrl: process.env.NEXT_PUBLIC_BASE_URL || "https://docharge.me",
+	siteUrl: process.env.NEXT_PUBLIC_BASE_URL || "https://venelin.ca",
 	generateRobotsTxt: true,
 	additionalPaths: async (config) => {
 		return [
