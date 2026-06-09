@@ -85,8 +85,8 @@ importers:
         specifier: ^1.100.0
         version: 1.100.0
       sass-loader:
-        specifier: ^16.0.7
-        version: 16.0.7(sass@1.100.0)(webpack@5.105.4(esbuild@0.27.7)(lightningcss@1.32.0)(postcss@8.5.15))
+        specifier: ^17.0.0
+        version: 17.0.0(sass@1.100.0)(webpack@5.105.4(esbuild@0.27.7)(lightningcss@1.32.0)(postcss@8.5.15))
       storybook:
         specifier: ^10.4.2
         version: 10.4.2(@testing-library/dom@10.4.1)(@types/react@19.2.17)(prettier@3.8.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -2865,19 +2865,16 @@ packages:
     resolution: {integrity: sha512-x/+Cz4YrimQxQccJf5mKEbIa1NzeCRNI5Ecl/ekmlYaampdNLPalVyIcCZNNH3MvmqBugV5TMYZXv0ljslUlaw==}
     engines: {node: '>= 0.4'}
 
-  sass-loader@16.0.7:
-    resolution: {integrity: sha512-w6q+fRHourZ+e+xA1kcsF27iGM6jdB8teexYCfdUw0sYgcDNeZESnDNT9sUmmPm3ooziwUJXGwZJSTF3kOdBfA==}
-    engines: {node: '>= 18.12.0'}
+  sass-loader@17.0.0:
+    resolution: {integrity: sha512-0Ybm8ohBQ9LcrycVrFQp/KQBNX5a3Wda9/smS0mE/xLffzEnwvV8nykOzrbiSWNzTE3IB/jiXx8O4QmDPG2+Gw==}
+    engines: {node: '>= 22.11.0'}
     peerDependencies:
       '@rspack/core': 0.x || ^1.0.0 || ^2.0.0-0
-      node-sass: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
       sass: ^1.3.0
       sass-embedded: '*'
       webpack: ^5.0.0
     peerDependenciesMeta:
       '@rspack/core':
-        optional: true
-      node-sass:
         optional: true
       sass:
         optional: true
@@ -5459,7 +5456,8 @@ snapshots:
 
   nanoid@3.3.12: {}
 
-  neo-async@2.6.2: {}
+  neo-async@2.6.2:
+    optional: true
 
   next-sitemap@4.2.3(next@16.2.7(@babel/core@7.29.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(sass@1.100.0)):
     dependencies:
@@ -5763,9 +5761,7 @@ snapshots:
       es-errors: 1.3.0
       is-regex: 1.2.1
 
-  sass-loader@16.0.7(sass@1.100.0)(webpack@5.105.4(esbuild@0.27.7)(lightningcss@1.32.0)(postcss@8.5.15)):
-    dependencies:
-      neo-async: 2.6.2
+  sass-loader@17.0.0(sass@1.100.0)(webpack@5.105.4(esbuild@0.27.7)(lightningcss@1.32.0)(postcss@8.5.15)):
     optionalDependencies:
       sass: 1.100.0
       webpack: 5.105.4(esbuild@0.27.7)(lightningcss@1.32.0)(postcss@8.5.15)
