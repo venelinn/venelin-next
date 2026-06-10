@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { enCA, frCA } from "date-fns/locale";
-import { utcToZonedTime } from "date-fns-tz";
+import { toZonedTime } from "date-fns-tz";
 
 const locales = {
   "en-CA": enCA,
@@ -34,7 +34,7 @@ export const FormattedTime = ({ dateStr, locale = "en-CA", timezone = "-05:00" }
   if (!dateStr) return null;
 
   const selectedLocale = locales[locale] || enCA;
-  const zonedDate = utcToZonedTime(dateStr, timezone);
+  const zonedDate = toZonedTime(dateStr, timezone);
   const formattedTime = format(zonedDate, "hh:mm a", {
     locale: selectedLocale,
   });

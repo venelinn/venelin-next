@@ -3,7 +3,7 @@ import { componentMap } from "@/components";
 import { Layout } from "@/components/Layout";
 import { Section } from "@/components/Section";
 import { IS_DEV, normalizeSlug } from "@/utils/common";
-import { getNavigationLinks, getPagePaths, getPages, getSiteConfig } from "../utils/content";
+import { getClient, getNavigationLinks, getPagePaths, getPages, getSiteConfig } from "../utils/content";
 import localization from "../utils/localization";
 
 // --- Types ---
@@ -84,7 +84,8 @@ function EmptyState() {
 
 // --- getStaticPaths ---
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
-  const routesPromises = locales?.map(async (locale) => await getPagePaths(locale)) || [];
+  const cdaClient = getClient(false);
+  const routesPromises = locales?.map(async (locale) => await getPagePaths(cdaClient, locale)) || []; // 💡 Pass Client
   const pathsArray = await Promise.all(routesPromises);
   const paths = pathsArray.flatMap((p) => p);
 
@@ -92,30 +93,48 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 };
 
 // --- getStaticProps ---
-export const getStaticProps = async ({ params, locale }) => {
-  const slugArray = params?.slug ?? [];
+export const getStaticProps: GetStaticProps = async ({ params, locale, preview }) => {
+  // 💡 Include 'preview' in destructuring
+  const slugParam = params?.slug;
+
+  // Ensure slugArray is always an array of strings
+  const slugArray = Array.isArray(slugParam) ? slugParam : slugParam ? [slugParam] : [];
+
+  // Now filter and join works safely on the array
   const slug = "/" + slugArray.filter(Boolean).join("/");
 
   const pageLocale = locale || localization.defaultLocale;
 
-  const [siteConfig, allPages] = await Promise.all([getSiteConfig(pageLocale), getPages(pageLocale)]);
+  // 1. Determine if we are in Preview Mode
+  const isPreview = preview || false;
+
+  // 2. Initialize the correct Contentful client
+  const client = getClient(isPreview); // 💡 CRUCIAL: Gets the CPA client if preview is true
+
+  // 3. Pass the client object to all fetching functions
+  const [siteConfig, allPages] = await Promise.all([
+    getSiteConfig(client, pageLocale), // 💡 Pass Client
+    getPages(client, pageLocale), // 💡 Pass Client
+  ]);
 
   const page = allPages.find((e) => normalizeSlug(e.slug) === slug && e.locale === pageLocale);
 
   if (!page) {
     console.warn("Did not find page for:", params, "locale:", locale);
-    return { notFound: true };
+    return { notFound: true, revalidate: 1 }; // Add revalidate for safety
   }
 
-  const navigationLinks = await getNavigationLinks(allPages, pageLocale);
+  const navigationLinks = getNavigationLinks(allPages, pageLocale);
 
   return {
     props: {
       page,
       siteConfig,
       navigationLinks,
+      preview: isPreview, // Optional: Pass back to the component
     },
+    // CRUCIAL: Use the client to bypass SSG only when in preview mode
+    revalidate: isPreview ? 1 : 60,
   };
 };
-
 export default ComposablePage;

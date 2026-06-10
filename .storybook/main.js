@@ -1,14 +1,13 @@
 import { fileURLToPath } from "node:url"
 import dotenv from "dotenv"
 import path, { dirname } from "path"
-import webpack from "webpack"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 dotenv.config()
 
-/** @type { import('@storybook/nextjs').StorybookConfig } */
+/** @type { import('@storybook/nextjs-vite').StorybookConfig } */
 const config = {
 	stories: [
 		"../components/**/*.mdx",
@@ -18,7 +17,7 @@ const config = {
 	addons: ["@storybook/addon-links", "@storybook/addon-docs"],
 
 	framework: {
-		name: "@storybook/nextjs",
+		name: "@storybook/nextjs-vite",
 		options: {
 			nextConfigPath: path.resolve(__dirname, "../next.config.js"),
 		},
@@ -26,36 +25,9 @@ const config = {
 
 	docs: {},
 
-	webpackFinal: async (storybookWebpackConfig) => {
-		// ✅ Define environment variables for components
-		storybookWebpackConfig.plugins.push(
-			new webpack.DefinePlugin({
-				"process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME": JSON.stringify(
-					process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-				),
-			}),
-		)
-
-		// ✅ Find and patch *nested* Sass rules
-		storybookWebpackConfig.module.rules.forEach((rule) => {
-			if (Array.isArray(rule.oneOf)) {
-				rule.oneOf.forEach((one) => {
-					one.use?.forEach((loader) => {
-						if (loader.loader?.includes("sass-loader")) {
-							loader.options = {
-								...loader.options,
-								sassOptions: {
-									...(loader.options.sassOptions || {}),
-									includePaths: [path.resolve(__dirname, "../")],
-								},
-							}
-						}
-					})
-				})
-			}
-		})
-
-		return storybookWebpackConfig
+	env: {
+		NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
+			process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? "",
 	},
 
 	typescript: {

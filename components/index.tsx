@@ -1,10 +1,19 @@
-import { AboutConnector } from "./About";
-import { Contacts } from "./Contacts";
+import dynamic from "next/dynamic";
 import { HeroConnector } from "./Hero";
-import { PortfolioConnector } from "./Portfolio";
-import { ResumeConnector } from "./Resume";
 
-// Map components which are dynamically resolved by content type in the CMS
+const AboutConnector = dynamic(() =>
+  import("./About").then((mod) => mod.AboutConnector),
+);
+const PortfolioConnector = dynamic(() =>
+  import("./Portfolio").then((mod) => mod.PortfolioConnector),
+);
+const Contacts = dynamic(() =>
+  import("./Contacts").then((mod) => mod.Contacts),
+);
+const ResumeConnector = dynamic(() =>
+  import("./Resume").then((mod) => mod.ResumeConnector),
+);
+
 export const componentMap = {
   intro: HeroConnector,
   about: AboutConnector,

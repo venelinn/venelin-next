@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<sitemap><loc>https://venelin.ca/sitemap-0.xml</loc></sitemap>
-</sitemapindex>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://venelin.ca</loc><lastmod>2026-06-09</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+<url><loc>https://venelin.ca/about-us</loc><lastmod>2026-06-09</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
+<url><loc>https://venelin.ca/media</loc><lastmod>2026-06-09</lastmod><changefreq>monthly</changefreq><priority>0.2</priority></url>
+<url><loc>https://venelin.ca/events</loc><lastmod>2026-06-09</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
+<url><loc>https://venelin.ca/contacts</loc><lastmod>2026-06-09</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
+<url><loc>https://venelin.ca/media/hotarg</loc><lastmod>2026-06-09</lastmod><changefreq>monthly</changefreq><priority>0.1</priority></url>
+<url><loc>https://venelin.ca/media/videos</loc><lastmod>2026-06-09</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://venelin.ca/media/barley-mow</loc><lastmod>2026-06-09</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+</urlset>

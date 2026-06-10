@@ -1,13 +1,11 @@
 /** @type {import('tailwindcss').Config} */
-// const defaultTheme = require("tailwindcss/defaultTheme");
-
-module.exports = {
+export default {
 	content: [
 		"./pages/**/*.{js,ts,jsx,tsx}",
 		"./components/**/*.{js,ts,jsx,tsx}",
 	],
 	corePlugins: {
-		preflight: false, // Disable Tailwind's base styles
+		preflight: false,
 	},
 	plugins: [],
 }

@@ -1,4 +1,4 @@
-const localization = require("./utils/localization")
+import localization from "./utils/localization.js"
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -9,7 +9,6 @@ const nextConfig = {
 	},
 	trailingSlash: false,
 	images: {
-		// dangerouslyAllowSVG: true,
 		remotePatterns: [
 			{
 				protocol: "https",
@@ -48,4 +47,4 @@ const nextConfig = {
 	},
 }
 
-module.exports = nextConfig
+export default nextConfig
